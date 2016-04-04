@@ -1,0 +1,58 @@
+<!doctype html>
+
+<html lang="en" >
+<head>
+    <title>Cups!</title>
+        
+    <!-- Depedencies -->
+    <!-- link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.js"></script >
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.5/ui-bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.5/ui-bootstrap-tpls.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/stylesheet.css">
+    
+    <!-- for collapsing elements. i dont know why yet -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>    
+    
+    <!-- App -->
+    <script src="js/app.js"></script>
+    <script src="js/services/players.js"></script>
+    <script src="js/controllers/ListCtrl.js"></script>
+    <script src="js/controllers/PostCtrl.js"></script>
+    
+</head>
+
+<body ng-app="app" >
+    <div>
+        <div id="AddPlayer" ng-controller="PostCtrl as post" >
+            <form name="inputForm" ng-submit="post.addPlayer(post.newPlayer)" ng-minlength="1" required>
+                <div class="form-group">
+                    <input class="form-control" name="playerNameInputField" value="" type="text" placeholder="Player's name" ng-model="post.newPlayer" ng-keydown="$event.which === 13 && addPlayer()"><br/>
+                    <span ng-show="!inputForm.playerNameInputField">Please add a name!</span>                    
+                </div>
+                <button class="btn btn-info"  type="submit" >Add Player</button>
+            </form>
+        </div>
+        
+        <div id="PlayerList" ng-controller="ListCtrl as list" >
+            <h3>Players:</h3>
+            <table>
+                <tr ng-repeat="player in list.players">
+                    <td>{{player.text}}</td>
+                    <td><button class="btn btn-info" ng-click="list.removePlayer($index)">Remove Player</button></td>                
+                </tr>      
+            </table>
+        </div>
+        
+        <div>
+        <!--input type="button" onclick="location.href='file:///C:/Users/ylimailk/Workspaces/gameScheduler/cuphtml.html';" value="Ready!" /-->
+        <button type="button" class="btn btn-info" >Ready!</button>   
+        </div>
+    </div>
+
+  
+</body>
+</html>
