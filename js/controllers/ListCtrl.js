@@ -1,10 +1,22 @@
 // A Controller for displaying the list of players and also removing players(exposes the list from service to the view)
-app.controller('ListCtrl', function(players){
+
+// Removes players from the list
+app.controller('ListCtrl', function(playersService){
     var self = this;
     
-    self.players = players.list;
+    self.players = playersService.list;
     
     self.removePlayer = function(index){
-        players.remove(index);
-        }; 
+        playersService.remove(index);
+        };        
+    });
+
+// Displays the current list
+app.controller('DisplayCtrl', function(playersService){
+    var self = this;
+    
+    self.displayPlayers = function(){
+        self.playersList = playersService.display();
+        //console.log(self.playersList);      
+        };
     });

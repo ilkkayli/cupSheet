@@ -1,6 +1,6 @@
 <!doctype html>
 
-<html lang="en" >
+<html lang="en" ng-app="app">
 <head>
     <title>Cups!</title>
         
@@ -10,7 +10,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.5/ui-bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.5/ui-bootstrap-tpls.min.js"></script>
     <link type="text/css" rel="stylesheet" href="css/stylesheet.css">
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular-route.js"></script>
+        
     <!-- for collapsing elements. i dont know why yet -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -23,16 +24,34 @@
     <script src="js/controllers/ListCtrl.js"></script>
     <script src="js/controllers/PostCtrl.js"></script>
     
+    <style>
+        html {
+            color: #888;
+            display: table;
+            font-family: sans-serif;
+            height: 100%;
+            text-align: center;
+            width: 100%;
+        }
+        
+         body {
+            display: table-cell;
+            vertical-align: middle;
+            margin: 2em auto;
+         }
+    </style>
+    
 </head>
 
-<body ng-app="app" >
+<body>
     <div>
-        <div id="AddPlayer" ng-controller="PostCtrl as post" >
-            <form name="inputForm" ng-submit="post.addPlayer(post.newPlayer)" ng-minlength="1" required>
+        <!--div id="AddPlayer" ng-controller="PostCtrl as post" >
+            <form name="inputForm" ng-submit="post.addPlayer(post.newPlayer)" >
                 <div class="form-group">
-                    <input class="form-control" name="playerNameInputField" value="" type="text" placeholder="Player's name" ng-model="post.newPlayer" ng-keydown="$event.which === 13 && addPlayer()"><br/>
-                    <span ng-show="!inputForm.playerNameInputField">Please add a name!</span>                    
-                </div>
+                    <input class="form-control" name="playerNameInputField" value="" type="text" placeholder="Player's name" ng-model="post.newPlayer" ng-keydown="$event.which === 13 && addPlayer()" ng-minlength="1" required><br/-->
+                    <!-- Line below is for popping up an error note if user leaves the input field empty. Disabled atm -->
+                    <!--span class="alert alert-danger" ng-show="inputForm.playerNameInputField.$error.required && inputForm.playerNameInputField.$dirty">Please add a name!</span-->                    
+                <!--/div>
                 <button class="btn btn-info"  type="submit" >Add Player</button>
             </form>
         </div>
@@ -41,18 +60,31 @@
             <h3>Players:</h3>
             <table>
                 <tr ng-repeat="player in list.players">
-                    <td>{{player.text}}</td>
+                    <td>{{ player.text }}</td>
                     <td><button class="btn btn-info" ng-click="list.removePlayer($index)">Remove Player</button></td>                
                 </tr>      
             </table>
         </div>
         
-        <div>
-        <!--input type="button" onclick="location.href='file:///C:/Users/ylimailk/Workspaces/gameScheduler/cuphtml.html';" value="Ready!" /-->
-        <button type="button" class="btn btn-info" >Ready!</button>   
+        <!--div id="DisplayReadyList" ng-controller="DisplayCtrl as display">
+             <div><button class="btn btn-info" ng-click="display.displayPlayers()">Ready!</button></div>
+             <div ng-repeat="player in display.playersList">{{ player.text }}</div>
+        </div-->
+        
+        <div class="col-md-3">
+		   <ul class="nav">
+                <li><a href="#players">Enter Players!</a></li>
+				<!--li><a href="#cup">Start Cup!</a></li-->
+            </ul>
+                
+            <div ng-view>
+            </div>
         </div>
-    </div>
+        <div class="col-md-3">
+           <ul class="nav">
+				<li><a href="#cup">Start Cup!</a></li>
+            </ul>
+        </div>
 
-  
 </body>
 </html>

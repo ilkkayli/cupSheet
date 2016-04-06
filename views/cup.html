@@ -1,0 +1,4 @@
+<div id="DisplayReadyList" ng-controller="DisplayCtrl as display">
+    <div><button class="btn btn-info" ng-click="display.displayPlayers()">Ready!</button></div>
+    <div ng-repeat="player in display.playersList">{{ player.text }}</div>
+</div>
