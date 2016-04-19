@@ -6,7 +6,7 @@ app.controller('PostCtrl', function(playersService){
     
     self.addPlayer = function(player){
         playersService.add(player);
-        self.newPlayer = ''; //Resets the input field with placeholder value
+        self.newPlayer = ''; // Resets the input field with a placeholder value
         };   
     
     });

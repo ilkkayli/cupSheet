@@ -1,4 +1,22 @@
-<div id="DisplayReadyList" ng-controller="DisplayCtrl as display">
+<!--div class="col-md-3" id="DisplayReadyList" ng-controller="DisplayCtrl as display">
     <div><button class="btn btn-info" ng-click="display.displayPlayers()">Ready!</button></div>
-    <div ng-repeat="player in display.playersList">{{ player.text }}</div>
+    <div ng-repeat="player in display.playersList">{{ player.text }}</div>  
+</div>
+
+<div class="col-md-3" ng-controller="PairCtrl as pairs">
+    <div><button class="btn btn-info" ng-click="pairs.formPairs()">Show Pairs!</button></div>
+    <div ng-repeat="pair in pairs.pairsList">{{ pair.player1.text }} - {{ pair.player2.text }}</div>  
+</div-->
+
+<div class="col-md-3" ng-controller="PairCtrl as pairs">
+    <div><button class="btn btn-info" ng-click="pairs.formPairs()">Show Pairs!</button></div>
+        <form ng-submit="pairs.addResult(pairs.newResult)">
+            <table>
+                <tr ng-repeat="pair in pairs.pairsList">
+                    <td>{{ pair.player1.text }} - {{ pair.player2.text }}</td>
+                    <td><input class="form-control" type="text" name="result" placeholder="X - X" ><br></td>
+                    <td><input class="btn btn-info" type="submit" value="Submit"></td>
+                </tr>      
+            </table>
+        </form>
 </div>
