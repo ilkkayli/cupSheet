@@ -21,16 +21,18 @@ app.controller('DisplayCtrl', function(playersService){
         };
     });
 
-// Creates pairs
+// A controller for creating pairs and handling results
 app.controller('PairCtrl', function(playersService){
     var self = this;
     
+    // Set up pairs
     self.formPairs = function(){
         self.pairsList = playersService.pairings();
-        console.log(self.pairsList);      
+        //console.log(self.pairsList);      
         };
-        
-    self.addResult = function(){
-        playersService.setResult(result);
+    
+    // Add a result
+    self.addResult = function(result){
+        playersService.addResult(result);
         };
     });
