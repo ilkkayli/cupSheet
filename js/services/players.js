@@ -55,7 +55,7 @@ angular.module('app').factory('playersService', function(){
         var standings = {};
         players.standings = [];
         for (var i=0; i < listLen; i++){
-            players.standings.push({id: i, text: players.list[i], points: 0})
+            players.standings.push({id: i, name: players.list[i], points: 0})
         }
         return players.standings;
         }
@@ -78,77 +78,58 @@ angular.module('app').factory('playersService', function(){
             var newResult = result[x];
             newResult = newResult.split("-");
             
-            // If player1 wins aka. result is in format, like 4-2 
-            if (newResult[0] > newResult[1]) {
-          
+            // If player1 wins aka. result is in format 4-2 
+            if (newResult[0] > newResult[1]) {          
                 playerVal = players.pairs[x].player1;
                 playerVal = playerVal.text;
-                value = playerList.indexOf(playerVal); // Checks if the player already exists on the standings, returns -1 if false.
-                             
-                if (value === -1) {
-                    // If player gets his first 2 points, his name and points are added on the standings
-                    standingArray.push({name: playerVal, points: 2});
-                    playerList.push(playerVal);
-                                                        
-                    console.log(playerVal);
-                    console.log(playerList);
-                    console.log(standingArray);
-                }
-                else {
-                    // If player has already earned points, his record will be updated on the standings
-                    for (var y in standingArray){
-                        if (standingArray[y].name == playerVal) {
-                            standingArray[y].points = standingArray[y].points + 2;
-                            break;
-                        }
-                    }
-                }               
-            }            
-            // If player2 wins aka. result is in format, like 2-4
-            else if (newResult[0] < newResult[1]) {
                 
+                for (var y in players.standings){
+                    if (players.standings[y].name.text == playerVal) {
+                        players.standings[y].points = players.standings[y].points + 2;
+                        break;
+                    }         
+                }             
+            }            
+            // If player2 wins aka. result is in format 2-4
+            else if (newResult[0] < newResult[1]) {                
                 playerVal = players.pairs[x].player2;
                 playerVal = playerVal.text;
-                value = playerList.indexOf(playerVal); // Checks if the player already exists on the standings, returns -1 if false.
-                             
-                if (value === -1) {
-                    //mikali pelaaja saa ensimmaiset pisteet, niin listataan tulostaulukkoon. Muuten else, jossa paivitetaan pistetilanne.
-                    standingArray.push({name: playerVal, points: 2});
-                    playerList.push(playerVal);
-                                                        
-                    console.log(playerVal);
-                    console.log(playerList);
-                    console.log(standingArray);
-                }
-                else {
-                    // If player has already earned points, his record will be updated on the standings
-                    for (var y in standingArray){
-                        if (standingArray[y].name == playerVal) {
-                            standingArray[y].points = standingArray[y].points + 2;
-                            break;
-                        }
+                
+                 for (var y in players.standings){
+                    if (players.standings[y].name.text == playerVal) {
+                        players.standings[y].points = players.standings[y].points + 2;
+                        break;
                     }
-                }                
+                 }           
             }
             
+            // In case of a draw, result is in format 4-4 both players earn 1 point
             else {
-                console.log("it's a draw!");                
-            }                            
+                playerVal = players.pairs[x].player1;
+                playerVal = playerVal.text;
+                
+                for (var y in players.standings){
+                    if (players.standings[y].name.text == playerVal) {
+                        players.standings[y].points = players.standings[y].points + 1;
+                        break;
+                    }
+                 }               
+                playerVal = players.pairs[x].player2;
+                playerVal = playerVal.text;
+                
+                for (var y in players.standings){
+                    if (players.standings[y].name.text == playerVal) {
+                        players.standings[y].points = players.standings[y].points + 1;
+                        break;
+                    }
+                 }                                   
+            }                                                
         }
          
         console.log("otteluparit: ", players.pairs);
         console.log("tulos: ", result);       
-        console.log("sarjataulukko: ", players.standings);      
-       
-        
-        //tähän logiikkaa tuloksen parseroimiseksi argumentti-stringistä muotoa: 1-1
-        //pitää siis päätellä kumpi voitti ja saa 2p tai tasapeli molemmille 1p (ja jatkoaikavoitto toiselle 2p, toiselle 1p)
-        //pitää myös ylläpitää maalieroa 
-        //ylläpidetään dynaamista tuloslistaa ja tämä metodi palauttaa päivitetyn arrayn
-        //console.log(result);
-        //console.log(players.pairs);
-
-        };
-        
+        console.log("sarjataulukko: ", players.standings);
+    
+        };        
     return players;
     });
