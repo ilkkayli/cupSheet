@@ -35,4 +35,12 @@ app.controller('PairCtrl', function(playersService){
     self.addResult = function(result){
         playersService.addResult(result);
         };
+        
+    // Displays standings
+    self.displayStandings = function(){
+        self.standings = playersService.displayStandings();
+        };                  
     });
+
+
+  

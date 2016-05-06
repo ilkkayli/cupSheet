@@ -9,14 +9,22 @@
 </div-->
 
 <div class="col-md-3" ng-controller="PairCtrl as pairs">
-    <div><button class="btn btn-info" ng-click="pairs.formPairs()">Show Pairs!</button></div>
+    <div><button class="btn btn-info" ng-click="pairs.formPairs(); pairs.displayStandings()" >Show Pairs!</button></div>
         <form ng-submit="pairs.addResult(pairs.result)">
             <table>
                 <tr ng-repeat="pair in pairs.pairsList track by $index">
                     <td>{{ pair.player1.text }} - {{ pair.player2.text }}</td>
                     <td><input class="form-control" type="text" name="result" ng-model="pairs.result[$index]" placeholder="X - X"><br></td>
-                    <td><input class="btn btn-info" type="submit" value="Submit"></td>
-                </tr>      
+                    <td><input class="btn btn-info" type="submit" value="Submit" ng-click="pairs.displayStandings()"></td>
+                </tr>
             </table>
         </form>
-</div>
+        <div>Standings</div>
+        <table>
+                <tr ng-repeat="pair in pairs.standings | orderBy:'-points'">
+                    <td>{{ pair.name.text }} , {{ pair.points }}</td>
+                </tr>
+        </table>
+        </div>
+
+
