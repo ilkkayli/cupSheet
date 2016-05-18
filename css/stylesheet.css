@@ -1,6 +1,14 @@
-.menu {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
+html {
+    color: #888;
+    display: table;
+    font-family: sans-serif;
+    height: 100%;
+    text-align: center;
+    width: 100%;
+   }
+   
+body {
+    display: table-cell;
+    vertical-align: middle;
+    margin: 2em auto;
+    }

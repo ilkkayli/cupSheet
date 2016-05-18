@@ -58,13 +58,39 @@ angular.module('app').factory('playersService', function(){
         var standings = {};
         players.standings = [];
         for (var i=0; i < listLen; i++){
-            players.standings.push({id: i, name: players.list[i], points: 0})
+            players.standings.push({id: i, name: players.list[i], scoredGoals: 0, allowedGoals: 0, goalDiff: 0, points: 0})
         }
         return players.standings;
         }
+        
+    // Function updates players' scored goals, allowed goals and goal difference on the standings array
+    function updateGoals(newResult, player1, player2) {
+        
+        console.log(player1);
+        console.log(player2);
+              
+        for (var z in players.standings){
+            if (players.standings[z].name.text == player1) {
+                players.standings[z].scoredGoals = players.standings[z].scoredGoals + parseInt(newResult[0]);
+                players.standings[z].allowedGoals = players.standings[z].allowedGoals + parseInt(newResult[1]);
+                players.standings[z].goalDiff = players.standings[z].scoredGoals - players.standings[z].allowedGoals;
+                break;
+                }
+            }
+                
+        for (var z in players.standings){
+            if (players.standings[z].name.text == player2) {
+                players.standings[z].scoredGoals = players.standings[z].scoredGoals + parseInt(newResult[1]);
+                players.standings[z].allowedGoals = players.standings[z].allowedGoals + parseInt(newResult[0]);
+                players.standings[z].goalDiff = players.standings[z].scoredGoals - players.standings[z].allowedGoals;
+                break;
+                } 
+            }         
+        return;
+        }
     
-    // Function updates players' points on the players.standings array 
-    function updateStandings(player, points) {                
+    // Function updates players' points on the tandings array 
+    function updatePoints(player, points) {                
  
          for (var y in players.standings){
             if (players.standings[y].name.text == player) {
@@ -84,26 +110,31 @@ angular.module('app').factory('playersService', function(){
         for (var x=0; x < resultLen; x++) {
             var newResult = result[x];
             newResult = newResult.split("-");
+            
+            // Update SG, GA and GDIFF per player on the standings
+            player1 = players.pairs[x].player1.text;
+            player2 = players.pairs[x].player2.text;            
+            updateGoals(newResult, player1, player2);          
  
             // If player1 wins aka. result is in format 4-2 
             if (newResult[0] > newResult[1]) {          
                 playerVal = players.pairs[x].player1.text;              
-                updateStandings(playerVal, 2);           
+                updatePoints(playerVal, 2);           
             }
             
             // If player2 wins aka. result is in format 2-4
             else if (newResult[0] < newResult[1]) {                
                 playerVal = players.pairs[x].player2.text;      
-                updateStandings(playerVal, 2);        
+                updatePoints(playerVal, 2);        
             }
             
             // In case of a draw, result is in format 4-4 both players earn 1 point
             else {
                 playerVal = players.pairs[x].player1.text;     
-                updateStandings(playerVal, 1);
+                updatePoints(playerVal, 1);
   
                 playerVal = players.pairs[x].player2.text;           
-                updateStandings(playerVal, 1);                             
+                updatePoints(playerVal, 1);                             
             }                        
             
         }         

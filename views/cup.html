@@ -1,13 +1,3 @@
-<!--div class="col-md-3" id="DisplayReadyList" ng-controller="DisplayCtrl as display">
-    <div><button class="btn btn-info" ng-click="display.displayPlayers()">Ready!</button></div>
-    <div ng-repeat="player in display.playersList">{{ player.text }}</div>  
-</div>
-
-<div class="col-md-3" ng-controller="PairCtrl as pairs">
-    <div><button class="btn btn-info" ng-click="pairs.formPairs()">Show Pairs!</button></div>
-    <div ng-repeat="pair in pairs.pairsList">{{ pair.player1.text }} - {{ pair.player2.text }}</div>  
-</div-->
-
 <div class="col-md-3" ng-controller="PairCtrl as pairs">
     <div><button class="btn btn-info" ng-click="pairs.formPairs(); pairs.displayStandings()" >Show Pairs!</button></div>
         <form ng-submit="pairs.addResult(pairs.result)">
@@ -21,9 +11,16 @@
         </form>
         <div>Standings</div>
         <table>
-                <tr ng-repeat="pair in pairs.standings | orderBy:'-points'">
-                    <td>{{ pair.name.text }} , {{ pair.points }}</td>
+            <thead>
+                <tr>
+                    <th>Name, Goals, GA, Diff, Points</th>
                 </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="pair in pairs.standings | orderBy:'-points'">
+                    <td>{{ pair.name.text }} , {{ pair.scoredGoals }} , {{ pair.allowedGoals }} , {{ pair.goalDiff }} ,  {{ pair.points }}</td>
+                </tr>
+            </tbody>
         </table>
         </div>
 
